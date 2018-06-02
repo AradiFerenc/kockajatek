@@ -8,6 +8,7 @@ public class GameManager {
         {
             ai[0].name=playername.name;
         }
+        return ai[0].name;
     }
     public boolean chooseStarter(AIPlayer []ai, Dice dice)
     {
