@@ -32,4 +32,15 @@ public class GameManager {
         }
         return ai.score;
     }
+    public int statusCheck(AIPlayer ai)
+    {
+        if(ai.score<21)
+        {
+            return 0;
+        }else if(ai.score==21)
+        {
+            return 1;
+        }
+        else return 2;
+    }
 }
