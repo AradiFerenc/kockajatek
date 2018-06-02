@@ -1,7 +1,15 @@
 package com.company;
 
 public class GameManager {
-    public int chooseStarter(AIPlayer []ai, Dice dice)
+    public String nameCorrector(AIPlayer []ai)
+    {
+        PlayerName playername=new PlayerName();
+        while(ai[0].name==ai[1].name)
+        {
+            ai[0].name=playername.name;
+        }
+    }
+    public boolean chooseStarter(AIPlayer []ai, Dice dice)
     {
         while(ai[0].thrownNumber==ai[1].thrownNumber)
         {
@@ -10,8 +18,17 @@ public class GameManager {
         }
         if(ai[0].thrownNumber>ai[1].thrownNumber)
         {
-            return 0;
+            return true;
         }
-        else return 1;
+        else return false;
+    }
+    public int doRound(AIPlayer ai,Dice dice, int aithinkofdicethrow)
+    {
+        for(int i=0;i<aithinkofdicethrow;i++)
+        {
+            ai.thrownNumber=dice.diceThrow();
+            ai.score=ai.score+ai.thrownNumber;
+        }
+        return ai.score;
     }
 }
