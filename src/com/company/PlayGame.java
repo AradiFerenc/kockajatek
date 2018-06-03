@@ -9,20 +9,30 @@ public class PlayGame extends GameManager{
     public void playTheGame()
     {
         gamemanager.nameCorrector();
-        for(int x=1;x<=3;x++)
-        {
-            if(gamemanager.chooseStarter()==0)
+
+            if(gamemanager.gameruler.chooseStarter()==0)
             {
-                gamemanager.doRound(1,aiplayers[1].thinkOfDiceThrow(aiplayers[1].score));
-                output.scoreText(aiplayers[1]);
-                gamemanager.winStatusCheck(StatusCheck(1));
+                for(int x=0;x<3;x++)
+                {
+                    gamemanager.doRound(1,gamemanager.gameruler.aiplayers[1].thinkOfDiceThrow(gamemanager.gameruler.aiplayers[1].score));
+                    output.scoreText(gamemanager.gameruler.aiplayers[1]);
+                    gamemanager.winStatusCheck(StatusCheck(1));
+                    gamemanager.doRound(0,gamemanager.gameruler.aiplayers[0].thinkOfDiceThrow(gamemanager.gameruler.aiplayers[0].score));
+                    output.scoreText(gamemanager.gameruler.aiplayers[0]);
+                    gamemanager.winStatusCheck(0);
+                }
             }
             else
                 {
-                    gamemanager.doRound(0,aiplayers[0].thinkOfDiceThrow(aiplayers[0].score));
-                    output.scoreText(aiplayers[0]);
-                    gamemanager.winStatusCheck(0);
+                    for(int x=0;x<3;x++)
+                    {
+                        gamemanager.doRound(0,gamemanager.gameruler.aiplayers[0].thinkOfDiceThrow(gamemanager.gameruler.aiplayers[0].score));
+                        output.scoreText(gamemanager.gameruler.aiplayers[0]);
+                        gamemanager.winStatusCheck(0);
+                        gamemanager.doRound(1,gamemanager.gameruler.aiplayers[1].thinkOfDiceThrow(gamemanager.gameruler.aiplayers[1].score));
+                        output.scoreText(gamemanager.gameruler.aiplayers[1]);
+                        gamemanager.winStatusCheck(StatusCheck(1));
+                    }
                 }
-        }
     }
 }
