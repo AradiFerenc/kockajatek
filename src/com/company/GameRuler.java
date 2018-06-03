@@ -1,10 +1,10 @@
 package com.company;
 
-public class GameRuler {
+public class GameRuler{
     AIPlayer []aiplayers=new AIPlayer[2];
     Dice dice;
     Output output;
-    public void GameRuler()
+    public GameRuler()
     {
         for(int i=0;i<2;i++)
         {
@@ -21,7 +21,7 @@ public class GameRuler {
             aiplayers[0].name=playername.name;
         }
     }
-    public void chooseStarter()
+    public int chooseStarter()
     {
         while(aiplayers[0].thrownNumber==aiplayers[1].thrownNumber)
         {
@@ -30,32 +30,48 @@ public class GameRuler {
         }
         if(aiplayers[0].thrownNumber>aiplayers[1].thrownNumber)
         {
-            aiplayers[0].isstarter=true;
+            return 0;
         }
-        else aiplayers[1].isstarter=true;
+        else return 1;
     }
-    public int winStatusCheck(AIPlayer ai)
+    public int StatusCheck(int i)
     {
-        if(ai.score<21)
+        if(aiplayers[i].score<21)
         {
             return 0;
-        }else if(ai.score==21)
+        }else if(aiplayers[i].score==21)
         {
             return 1;
         }
         else return 2;
     }
-    public void doThrowAndCheckStatus(int i)
+    public void doThrow(int i)
     {
         aiplayers[i].thrownNumber = dice.diceThrow();
-        if (winStatusCheck(aiplayers[i]) == 0) {
-            aiplayers[i].score = aiplayers[i].score + aiplayers[i].thrownNumber;
-        } else if (winStatusCheck(aiplayers[i]) == 1) {
-            output.winText(aiplayers[i]);
-        } else if (i == 0) {
-            output.winText(aiplayers[1]);
+        aiplayers[i].score = aiplayers[i].score + aiplayers[i].thrownNumber;
+    }
+    public void winStatusCheck(int i)
+    {
+        if (i == 0)
+        {
+            if(StatusCheck(0)==0)
+            {
+                output.scoreText(aiplayers[0]);
+            }
+            else if(StatusCheck(0)==1)
+            {
+                output.winText(aiplayers[0]);
+            }
+            else
+            {output.winText(aiplayers[1]);}
         } else {
-            output.winText(aiplayers[0]);
+            if (StatusCheck(1) == 0) {
+                output.scoreText(aiplayers[1]);
+            } else if (StatusCheck(1) == 1) {
+                output.winText(aiplayers[1]);
+            } else {
+                output.winText(aiplayers[0]);
+            }
         }
     }
 }

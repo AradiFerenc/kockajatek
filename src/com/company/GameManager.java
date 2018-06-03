@@ -1,6 +1,6 @@
 package com.company;
 
-public class GameManager {
+public class GameManager extends GameRuler {
     GameRuler gameruler;
     public GameManager()
     {
@@ -12,7 +12,7 @@ public class GameManager {
     {
         for(int j=0;j<numberofdicethrows;j++)
         {
-            gameruler.doThrowAndCheckStatus(i);
+            gameruler.doThrow(i);
         }
     }
 }
