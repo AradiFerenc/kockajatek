@@ -1,46 +1,18 @@
 package com.company;
 
 public class GameManager {
-    public String nameCorrector(AIPlayer []ai)
+    GameRuler gameruler;
+    public GameManager()
     {
-        PlayerName playername=new PlayerName();
-        while(ai[0].name==ai[1].name)
-        {
-            ai[0].name=playername.name;
-        }
-        return ai[0].name;
+        gameruler=new GameRuler();
     }
-    public boolean chooseStarter(AIPlayer []ai, Dice dice)
+
+
+    public void doRound(int i,int numberofdicethrows)
     {
-        while(ai[0].thrownNumber==ai[1].thrownNumber)
+        for(int j=0;j<numberofdicethrows;j++)
         {
-            ai[0].thrownNumber=dice.diceThrow();
-            ai[1].thrownNumber=dice.diceThrow();
+            gameruler.doThrowAndCheckStatus(i);
         }
-        if(ai[0].thrownNumber>ai[1].thrownNumber)
-        {
-            return true;
-        }
-        else return false;
-    }
-    public int doRound(AIPlayer ai,Dice dice, int aithinkofdicethrow)
-    {
-        for(int i=0;i<aithinkofdicethrow;i++)
-        {
-            ai.thrownNumber=dice.diceThrow();
-            ai.score=ai.score+ai.thrownNumber;
-        }
-        return ai.score;
-    }
-    public int statusCheck(AIPlayer ai)
-    {
-        if(ai.score<21)
-        {
-            return 0;
-        }else if(ai.score==21)
-        {
-            return 1;
-        }
-        else return 2;
     }
 }
