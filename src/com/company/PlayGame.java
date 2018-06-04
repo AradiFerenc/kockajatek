@@ -1,38 +1,49 @@
 package com.company;
 
-public class PlayGame extends GameManager{
-    GameManager gamemanager;
+public class PlayGame{
+    GameRuler gameruler;
     public PlayGame()
     {
-        gamemanager=new GameManager();
+        gameruler =new GameRuler();
     }
     public void playTheGame()
     {
-        gamemanager.nameCorrector();
+        gameruler.nameCorrector();
 
-            if(gamemanager.gameruler.chooseStarter()==0)
+            if(gameruler.chooseStarter()==0)
             {
-                for(int x=0;x<3;x++)
+                for(int x=1;x<=3;x++)
                 {
-                    gamemanager.doRound(1,gamemanager.gameruler.aiplayers[1].thinkOfDiceThrow(gamemanager.gameruler.aiplayers[1].score));
-                    output.scoreText(gamemanager.gameruler.aiplayers[1]);
-                    gamemanager.winStatusCheck(StatusCheck(1));
-                    gamemanager.doRound(0,gamemanager.gameruler.aiplayers[0].thinkOfDiceThrow(gamemanager.gameruler.aiplayers[0].score));
-                    output.scoreText(gamemanager.gameruler.aiplayers[0]);
-                    gamemanager.winStatusCheck(0);
+                    gameruler.doRound(1, gameruler.aiplayers[1].thinkOfDiceThrow(gameruler.aiplayers[1].score));
+                    if(gameruler.winStatusCheck(1))
+                    {
+                        return;
+                    }
+                    gameruler.doRound(0, gameruler.aiplayers[0].thinkOfDiceThrow(gameruler.aiplayers[0].score));
+                    if(gameruler.winStatusCheck(0))
+                    {
+                        return;
+                    }
                 }
+                gameruler.checkWinnerIfNotEnoughPoints();
+
             }
             else
                 {
-                    for(int x=0;x<3;x++)
+                    for(int x=1;x<=3;x++)
                     {
-                        gamemanager.doRound(0,gamemanager.gameruler.aiplayers[0].thinkOfDiceThrow(gamemanager.gameruler.aiplayers[0].score));
-                        output.scoreText(gamemanager.gameruler.aiplayers[0]);
-                        gamemanager.winStatusCheck(0);
-                        gamemanager.doRound(1,gamemanager.gameruler.aiplayers[1].thinkOfDiceThrow(gamemanager.gameruler.aiplayers[1].score));
-                        output.scoreText(gamemanager.gameruler.aiplayers[1]);
-                        gamemanager.winStatusCheck(StatusCheck(1));
+                        gameruler.doRound(0, gameruler.aiplayers[0].thinkOfDiceThrow(gameruler.aiplayers[0].score));
+                        if(gameruler.winStatusCheck(0))
+                        {
+                            return;
+                        }
+                        gameruler.doRound(1, gameruler.aiplayers[1].thinkOfDiceThrow(gameruler.aiplayers[1].score));
+                        if(gameruler.winStatusCheck(1))
+                        {
+                            return;
+                        }
                     }
+                gameruler.checkWinnerIfNotEnoughPoints();
                 }
     }
 }

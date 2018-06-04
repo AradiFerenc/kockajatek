@@ -17,4 +17,7 @@ public class Output{
     {
         System.out.println(ai.name+" Has won the game!");
     }
+    public void drawText(){
+        System.out.println("It's a draw!");
+    }
 }
