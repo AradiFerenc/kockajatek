@@ -1,49 +1,54 @@
 package com.company;
 
-public class PlayGame{
+public class PlayGame {
     GameRuler gameruler;
-    public PlayGame()
-    {
-        gameruler =new GameRuler();
+    AIPlayer[] aiplayers = new AIPlayer[2];
+    Dice dice;
+    Output output;
+
+    public PlayGame() {
+        gameruler = new GameRuler();
+        initAIPlayers();
+        dice = new Dice();
+        output = new Output();
     }
-    public void playTheGame()
+
+    public void initAIPlayers() {
+        for (int i = 0; i < 2; i++) {
+            aiplayers[i] = new AIPlayer();
+        }
+    }
+    public void nameCorrector()
     {
-        gameruler.nameCorrector();
-
-            if(gameruler.chooseStarter()==0)
+        boolean samenamesexist=true;
+        PlayerName playername=new PlayerName();
+        while(samenamesexist)
+        {
+            samenamesexist=false;
+            for(int i=0;i<aiplayers.length-1;i++)
             {
-                for(int x=1;x<=3;x++)
+                for(int j=1;j<aiplayers.length;j++)
                 {
-                    gameruler.doRound(1, gameruler.aiplayers[1].thinkOfDiceThrow(gameruler.aiplayers[1].score));
-                    if(gameruler.winStatusCheck(1))
+                    if(aiplayers[i].name==aiplayers[j].name)
                     {
-                        return;
-                    }
-                    gameruler.doRound(0, gameruler.aiplayers[0].thinkOfDiceThrow(gameruler.aiplayers[0].score));
-                    if(gameruler.winStatusCheck(0))
-                    {
-                        return;
+                        samenamesexist=true;
+                        aiplayers[j].name=playername.createPlayerName();
                     }
                 }
-                gameruler.checkWinnerIfNotEnoughPoints();
-
             }
-            else
-                {
-                    for(int x=1;x<=3;x++)
-                    {
-                        gameruler.doRound(0, gameruler.aiplayers[0].thinkOfDiceThrow(gameruler.aiplayers[0].score));
-                        if(gameruler.winStatusCheck(0))
-                        {
-                            return;
-                        }
-                        gameruler.doRound(1, gameruler.aiplayers[1].thinkOfDiceThrow(gameruler.aiplayers[1].score));
-                        if(gameruler.winStatusCheck(1))
-                        {
-                            return;
-                        }
-                    }
-                gameruler.checkWinnerIfNotEnoughPoints();
-                }
+        }
+    }
+
+    public void playTheGame() {
+        nameCorrector();
+        output.showWelcomeText(aiplayers[0], aiplayers[1]);
+        output.showStarterText(aiplayers[0]);
+        for (int x = 1; x <= 3; x++) {
+            gameruler.doRound(aiplayers[0], aiplayers[0].thinkOfDiceThrow(aiplayers[0].score));
+            if (gameruler.winStatusCheck(aiplayers[0])) {return;}
+            gameruler.doRound(aiplayers[1], aiplayers[1].thinkOfDiceThrow(aiplayers[1].score));
+            if (gameruler.winStatusCheck(aiplayers[1])) {return;}
+        }
+        gameruler.checkWinnerIfNotEnoughPoints(aiplayers);
     }
 }

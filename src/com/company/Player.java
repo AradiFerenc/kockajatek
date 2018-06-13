@@ -3,13 +3,14 @@ package com.company;
 public class Player {
     int thrownNumber;
     int zerothrow;
-    PlayerName playername;
+    static PlayerName playername=new PlayerName();
     String name;
     int score;
+    boolean starter=false;
     public Player()
     {
-        playername=new PlayerName();
-        name=playername.name;
+        //playername=new PlayerName();
+        name=playername.createPlayerName();
         thrownNumber=0;
         score=0;
         zerothrow=0;

@@ -1,104 +1,87 @@
 package com.company;
 
+import java.util.Collections;
+import java.util.List;
+
 public class GameRuler{
-    AIPlayer []aiplayers=new AIPlayer[2];
+    /*AIPlayer []aiplayers=new AIPlayer[2];
     Dice dice;
-    Output output;
+    Output output;*/
     public GameRuler()
     {
+        /*initAIPlayers();
+        dice=new Dice();
+        output=new Output();*/
+    }
+
+    /*public void initAIPlayers() {
         for(int i=0;i<2;i++)
         {
             aiplayers[i]=new AIPlayer();
         }
-        dice=new Dice();
-        output=new Output();
-    }
-    public void nameCorrector()
+    }*/
+
+
+    /*public chooseStarterIndex(AIPlayer[] ais)
     {
-        PlayerName playername=new PlayerName();
-        while(aiplayers[0].name==aiplayers[1].name)
-        {
-            aiplayers[0].name=playername.name;
-        }
-    }
-    public int chooseStarter()
+
+    }*/
+    public int StatusCheck(AIPlayer ai)
     {
-        while(aiplayers[0].zerothrow==aiplayers[1].zerothrow)
-        {
-            aiplayers[0].zerothrow=dice.diceThrow();
-            aiplayers[1].zerothrow=dice.diceThrow();
-        }
-        if(aiplayers[0].thrownNumber>aiplayers[1].thrownNumber)
+        if(ai.score<21)
         {
             return 0;
-        }
-        else return 1;
-    }
-    public int StatusCheck(int i)
-    {
-        if(aiplayers[i].score<21)
-        {
-            return 0;
-        }else if(aiplayers[i].score==21)
+        }else if(ai.score==21)
         {
             return 1;
         }
         else return 2;
     }
-    public void doThrow(int i)
+    public void doThrow(AIPlayer ai)
     {
-        aiplayers[i].thrownNumber = dice.diceThrow();
-        aiplayers[i].score = aiplayers[i].score + aiplayers[i].thrownNumber;
+        Dice dice=new Dice();
+        ai.thrownNumber = dice.diceThrow();
+        ai.score = ai.score + ai.thrownNumber;
     }
-    public boolean winStatusCheck(int i)
+    public boolean winStatusCheck(AIPlayer ai)
     {
-        if (i == 0)
-        {
-            if(StatusCheck(0)==0)
+        Output output=new Output();
+            if(StatusCheck(ai)==0)
             {
-                output.scoreText(aiplayers[0]);
+                output.showScoreText(ai);
                 return false;
             }
-            else if(StatusCheck(0)==1)
+            else if(StatusCheck(ai)==1)
             {
-                output.winText(aiplayers[0]);
+                output.showScoreText(ai);
+                output.showWinText(ai);
                 return true;
             }
             else
             {
-                output.winText(aiplayers[1]);
+                output.showScoreText(ai);
+                output.showLoseText(ai);
                 return true;
             }
-        } else {
-            if (StatusCheck(1) == 0) {
-                output.scoreText(aiplayers[1]);
-                return false;
-            } else if (StatusCheck(1) == 1) {
-                output.winText(aiplayers[1]);
-                return true;
-            } else {
-                output.winText(aiplayers[0]);
-                return true;
-            }
-        }
     }
-    public void doRound(int i,int numberofdicethrows)
+    public void doRound(AIPlayer ai,int numberofdicethrows)
     {
         for(int j=0;j<numberofdicethrows;j++)
         {
-            doThrow(i);
+            doThrow(ai);
         }
     }
-    public void checkWinnerIfNotEnoughPoints()
+    public void checkWinnerIfNotEnoughPoints(AIPlayer[] ais)
     {
-        if (21-aiplayers[0].score<21-aiplayers[1].score)
+        Output output=new Output();
+        if (21-ais[0].score<21-ais[1].score)
         {
-            output.winText(aiplayers[0]);
+            output.showWinText(ais[0]);
         }
-        else if (21-aiplayers[1].score<21-aiplayers[0].score)
+        else if (21-ais[1].score<21-ais[0].score)
         {
-            output.winText(aiplayers[1]);
-        }else output.drawText();
+            output.showWinText(ais[1]);
+        }else output.showDrawText();
     }
 
 }
