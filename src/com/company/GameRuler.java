@@ -1,31 +1,7 @@
 package com.company;
 
-import java.util.Collections;
-import java.util.List;
-
 public class GameRuler{
-    /*AIPlayer []aiplayers=new AIPlayer[2];
-    Dice dice;
-    Output output;*/
-    public GameRuler()
-    {
-        /*initAIPlayers();
-        dice=new Dice();
-        output=new Output();*/
-    }
 
-    /*public void initAIPlayers() {
-        for(int i=0;i<2;i++)
-        {
-            aiplayers[i]=new AIPlayer();
-        }
-    }*/
-
-
-    /*public chooseStarterIndex(AIPlayer[] ais)
-    {
-
-    }*/
     public int StatusCheck(AIPlayer ai)
     {
         if(ai.score<21)

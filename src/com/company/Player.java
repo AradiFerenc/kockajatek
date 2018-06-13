@@ -9,7 +9,6 @@ public class Player {
     boolean starter=false;
     public Player()
     {
-        //playername=new PlayerName();
         name=playername.createPlayerName();
         thrownNumber=0;
         score=0;
