@@ -1,13 +1,13 @@
 package com.company;
 
-public class Player {
+class Player {
     int thrownNumber;
-    int zerothrow;
-    static PlayerName playername=new PlayerName();
+    private static PlayerName playername=new PlayerName();
     String name;
     int score;
+    private int zerothrow;
     boolean starter=false;
-    public Player()
+    Player()
     {
         name=playername.createPlayerName();
         thrownNumber=0;

@@ -1,9 +1,9 @@
 package com.company;
 
-public class Dice {
+class Dice {
     Dice(){}
-    RandomNumber randomnumber= new RandomNumber();
-    public int diceThrow()
+    private RandomNumber randomnumber= new RandomNumber();
+    int diceThrow()
     {
         return (Math.abs(randomnumber.createRandomNumber())%6)+1;
     }
