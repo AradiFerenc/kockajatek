@@ -1,8 +1,8 @@
 package com.company;
 
-class GameRuler{
+public class GameRuler{
 
-    private int StatusCheck(AIPlayer ai)
+    public int StatusCheck(AIPlayer ai)
     {
         if(ai.score<21)
         {
@@ -13,13 +13,13 @@ class GameRuler{
         }
         else return 2;
     }
-    private void doThrow(AIPlayer ai)
+    public void doThrow(AIPlayer ai)
     {
         Dice dice=new Dice();
         ai.thrownNumber = dice.diceThrow();
         ai.score = ai.score + ai.thrownNumber;
     }
-    boolean winStatusCheck(AIPlayer ai)
+    public boolean winStatusCheck(AIPlayer ai)
     {
         Output output=new Output();
             if(StatusCheck(ai)==0)
@@ -40,14 +40,14 @@ class GameRuler{
                 return true;
             }
     }
-    void doRound(AIPlayer ai,int numberofdicethrows)
+    public void doRound(AIPlayer ai,int numberofdicethrows)
     {
         for(int j=0;j<numberofdicethrows;j++)
         {
             doThrow(ai);
         }
     }
-    void checkWinnerIfNotEnoughPoints(AIPlayer[] ais)
+    public void checkWinnerIfNotEnoughPoints(AIPlayer[] ais)
     {
         Output output=new Output();
         if (21-ais[0].score<21-ais[1].score)

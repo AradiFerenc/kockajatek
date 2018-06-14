@@ -1,7 +1,7 @@
 package com.company;
 
-class AIPlayer extends Player {
-    int thinkOfDiceThrow(int score)
+public class AIPlayer extends Player {
+    public int thinkOfDiceThrow(int score)
     {
         int numberOfThrows;
         if(score <= 3)

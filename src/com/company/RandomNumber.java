@@ -1,10 +1,8 @@
 package com.company;
-
 import java.util.Random;
-
-class RandomNumber {
+public class RandomNumber {
     RandomNumber() {}
-    int createRandomNumber()
+    public int createRandomNumber()
     {
         Random rand=new Random();
         return rand.nextInt();

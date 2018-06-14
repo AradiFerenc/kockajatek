@@ -1,22 +1,24 @@
 package com.company;
 
-class PlayGame {
-    private GameRuler gameruler;
-    private AIPlayer[] aiplayers = new AIPlayer[2];
-    private Output output;
+public class PlayGame {
+    GameRuler gameruler;
+    AIPlayer[] aiplayers = new AIPlayer[2];
+    Dice dice;
+    Output output;
 
-    PlayGame() {
+    public PlayGame() {
         gameruler = new GameRuler();
         initAIPlayers();
+        dice = new Dice();
         output = new Output();
     }
 
-    private void initAIPlayers() {
+    public void initAIPlayers() {
         for (int i = 0; i < 2; i++) {
             aiplayers[i] = new AIPlayer();
         }
     }
-    private void nameCorrector()
+    public void nameCorrector()
     {
         boolean samenamesexist=true;
         PlayerName playername=new PlayerName();
@@ -37,7 +39,7 @@ class PlayGame {
         }
     }
 
-    void playTheGame() {
+    public void playTheGame() {
         nameCorrector();
         output.showWelcomeText(aiplayers[0], aiplayers[1]);
         output.showStarterText(aiplayers[0]);
