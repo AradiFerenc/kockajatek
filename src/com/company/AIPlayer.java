@@ -1,6 +1,8 @@
 package com.company;
 
 public class AIPlayer extends Player {
+
+    @Override
     public int thinkOfDiceThrow(int score)
     {
         int numberOfThrows;

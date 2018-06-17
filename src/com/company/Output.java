@@ -1,29 +1,43 @@
 package com.company;
 
 public class Output{
-    public void showWelcomeText(AIPlayer ai1, AIPlayer ai2)
+    public static void askForHumanPlayers()
     {
-        System.out.println("The players are "+ ai1.name+" and "+ai2.name);
-        /*System.out.println("The players are "+ai[0].name);
-        for(int i=1;i<ai.length;i++){}; */
+        System.out.println("How many humans do you want?");
     }
-    public void showStarterText(AIPlayer ai)
+    public static void askForAIPlayers()
     {
-        System.out.println(ai.name+" starts:");
+        System.out.println("How many AI-s do you want?");
     }
-    public void showScoreText(AIPlayer ai)
+    public static void showWelcomeText(Player[] players)
     {
-        System.out.println(ai.name+": "+ai.score);
+        System.out.print("The players are ");
+        for (int i=0;i<players.length-2;i++)
+        {
+            System.out.print(players[i].name+", ");
+        }
+        System.out.print(players[players.length-2].name+" and ");
+        System.out.println(players[players.length-1].name+".");
     }
-    public void showWinText(AIPlayer ai)
+    public static void showStarterText(Player player)
     {
-        System.out.println(ai.name+" has won the game!");
+        System.out.println(player.name+" starts:");
     }
-    public void showLoseText(AIPlayer ai)
+    public static void showPlayerDiceThrowText()
     {
-        System.out.println(ai.name+" has overthrew the limit and lost the game!");
+        System.out.println("How many dices would you like to throw with?");
     }
-    public void showDrawText(){
+    public static void showPlayerDiceThrowErrorText(){System.out.println("Invalid number! The number must be between 1 and 3!");}
+    public static void showScoreText(Player player)
+    {
+        System.out.println(player.name+": "+player.score);
+    }
+    public static void showWinText(Player player)
+    {
+        System.out.println(player.name+" has won the game!");
+    }
+    public static void showLoseText(Player player) {System.out.println(player.name+" has overthrew the limit and lost the game!"); }
+    public static void showDrawText(){
         System.out.println("It's a draw!");
     }
 }

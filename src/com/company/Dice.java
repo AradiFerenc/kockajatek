@@ -2,7 +2,7 @@ package com.company;
 
 public class Dice {
     Dice(){}
-    RandomNumber randomnumber= new RandomNumber();
+    Randomizer randomnumber= new Randomizer();
     public int diceThrow()
     {
         return (Math.abs(randomnumber.createRandomNumber())%6)+1;

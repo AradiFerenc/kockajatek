@@ -2,22 +2,31 @@ package com.company;
 
 public class PlayGame {
     GameRuler gameruler;
-    AIPlayer[] aiplayers = new AIPlayer[2];
     Dice dice;
-    Output output;
-
-    public PlayGame() {
+    Player[] players;
+    public PlayGame(int ais, int humans) {
+        players=new Player[ais+humans];
         gameruler = new GameRuler();
-        initAIPlayers();
+        initAIPlayers(ais);
+        initHumanPlayers(ais,humans);
         dice = new Dice();
-        output = new Output();
     }
 
-    public void initAIPlayers() {
-        for (int i = 0; i < 2; i++) {
-            aiplayers[i] = new AIPlayer();
+
+    public void initAIPlayers(int aiplayers) {
+        for (int i = 0; i < aiplayers; i++) {
+            players[i] = new AIPlayer();
         }
     }
+
+    public void initHumanPlayers(int aiplayers, int humanplayers)
+    {
+        for(int i=aiplayers;i<aiplayers+humanplayers;i++)
+        {
+            players[i]=new HumanPlayer();
+        }
+    }
+
     public void nameCorrector()
     {
         boolean samenamesexist=true;
@@ -25,30 +34,42 @@ public class PlayGame {
         while(samenamesexist)
         {
             samenamesexist=false;
-            for(int i=0;i<aiplayers.length-1;i++)
+            for(int i = 0; i< players.length-1; i++)
             {
-                for(int j=1;j<aiplayers.length;j++)
+                for(int j = 1; j< players.length; j++)
                 {
-                    if(aiplayers[i].name==aiplayers[j].name)
+                    if(players[i].name.equals(players[j].name))
                     {
                         samenamesexist=true;
-                        aiplayers[j].name=playername.createPlayerName();
+                        players[j].name=playername.createPlayerName();
                     }
                 }
             }
         }
     }
 
+
     public void playTheGame() {
         nameCorrector();
-        output.showWelcomeText(aiplayers[0], aiplayers[1]);
-        output.showStarterText(aiplayers[0]);
-        for (int x = 1; x <= 3; x++) {
-            gameruler.doRound(aiplayers[0], aiplayers[0].thinkOfDiceThrow(aiplayers[0].score));
-            if (gameruler.winStatusCheck(aiplayers[0])) {return;}
-            gameruler.doRound(aiplayers[1], aiplayers[1].thinkOfDiceThrow(aiplayers[1].score));
-            if (gameruler.winStatusCheck(aiplayers[1])) {return;}
+        Output.showWelcomeText(players);
+        Randomizer.scrambleArray(players);
+        Output.showStarterText(players[0]);
+        for (int round = 1; round <= 3; round++)
+        {
+            if(doAFullRound()){return;}
         }
-        gameruler.checkWinnerIfNotEnoughPoints(aiplayers);
+        gameruler.checkWinnerIfNotEnoughPoints(players);
+    }
+
+
+
+    public boolean doAFullRound()
+    {
+        for(int i=0;i<players.length;i++)
+        {
+            gameruler.doThrowsForOnePlayer(players[i], players[i].thinkOfDiceThrow(players[i].score));
+            if (gameruler.winStatusCheck(players[i])) {return true;}
+        }
+        return false;
     }
 }
