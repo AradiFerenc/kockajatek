@@ -10,14 +10,20 @@ public class Main {
         int numberofhumanplayers;
         Scanner scanner=new Scanner(System.in);
 
-        //Asking for basic information
+        //Asking for players
         Output.askForAIPlayers();
         numberofaiplayers=scanner.nextInt();
         Output.askForHumanPlayers();
         numberofhumanplayers=scanner.nextInt();
+        String[] names=new String[numberofhumanplayers];
 
+        for(int i=0;i<numberofhumanplayers;i++)
+        {
+            scanner=new Scanner(System.in);
+            names[i]=scanner.next();
+        }
         //Creating objects
-        PlayGame playgame=new PlayGame(numberofaiplayers,numberofhumanplayers);
+        PlayGame playgame=new PlayGame(numberofaiplayers,numberofhumanplayers,names);
 
         //Main loop
         playgame.playTheGame();

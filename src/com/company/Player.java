@@ -6,6 +6,7 @@ public class Player {
     static PlayerName playername=new PlayerName();
     String name;
     int score;
+    boolean islost=false;
     public Player()
     {
         name=playername.createPlayerName();
@@ -14,7 +15,7 @@ public class Player {
         zerothrow=0;
     }
     //this method will be overrided
-    public int thinkOfDiceThrow(int score)
+    public int thinkOfDiceThrow(int score,boolean islost)
     {
         return 1;
     }

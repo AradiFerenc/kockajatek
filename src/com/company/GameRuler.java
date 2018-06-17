@@ -2,60 +2,121 @@ package com.company;
 
 public class GameRuler{
 
-    public int StatusCheck(Player ai)
+    public StatusEnum StatusCheck(Player player)
     {
-        if(ai.score<21)
+        if(player.score<21)
         {
-            return 0;
-        }else if(ai.score==21)
+            return StatusEnum.Nothing;
+        }else if(player.score==21)
         {
-            return 1;
+            return StatusEnum.Win;
         }
-        else return 2;
+        else return StatusEnum.Lose;
     }
-    public void doThrow(Player ai)
+    public void doThrow(Player player)
     {
         Dice dice=new Dice();
-        ai.thrownNumber = dice.diceThrow();
-        ai.score = ai.score + ai.thrownNumber;
+        player.thrownNumber = dice.diceThrow();
+        player.score = player.score + player.thrownNumber;
     }
-    public boolean winStatusCheck(Player ai)
+    public StatusEnum winStatusCheck(Player player)
     {
-            if(StatusCheck(ai)==0)
+            if(StatusCheck(player).equals(StatusEnum.Nothing))
             {
-                Output.showScoreText(ai);
-                return false;
+                Output.showScoreText(player);
+                return StatusEnum.Nothing;
             }
-            else if(StatusCheck(ai)==1)
+            else if(StatusCheck(player).equals(StatusEnum.Win))
             {
-                Output.showScoreText(ai);
-                Output.showWinText(ai);
-                return true;
+                Output.showScoreText(player);
+                Output.showWinText(player);
+                return StatusEnum.Win;
             }
             else
             {
-                Output.showScoreText(ai);
-                Output.showLoseText(ai);
-                return true;
+                if(!player.islost)
+                {
+                    Output.showScoreText(player);
+                    Output.showLoseText(player);
+                }
+                player.islost=true;
+                return StatusEnum.Lose;
             }
     }
-    public void doThrowsForOnePlayer(Player ai, int numberofdicethrows)
+    public void doThrowsForOnePlayer(Player player, int numberofdicethrows)
     {
         for(int j=0;j<numberofdicethrows;j++)
         {
-            doThrow(ai);
+            doThrow(player);
         }
     }
-    public void checkWinnerIfNotEnoughPoints(Player[] ais)
+    public boolean checkWinnerIfNotEnoughPoints(Player[] players)
     {
-        if (21-ais[0].score<21-ais[1].score)
+        int min=21;
+        int[] playerindexes=new int[players.length];
+        for(int i=0;i<players.length;i++)
         {
-            Output.showWinText(ais[0]);
+            playerindexes[i]=-1;
         }
-        else if (21-ais[1].score<21-ais[0].score)
+        int temp=0;
+        for(int i=0;i<players.length;i++)
         {
-            Output.showWinText(ais[1]);
-        }else Output.showDrawText();
+            if (21-players[i].score<min && !players[i].islost)
+            {
+                min=21-players[i].score;
+                playerindexes[temp]=i;
+            }
+        }
+        for(int i=0;i<players.length;i++)
+        {
+            if(21-players[i].score==min && !players[i].islost)
+            {
+                playerindexes[temp]=i;
+                temp++;
+            }
+        }
+        if(playerindexes[1]>=0)
+        {
+            Output.showDrawText(playerindexes,players);
+        }
+        else if(playerindexes[0]>=0)
+        {
+            Output.showWinText(players[playerindexes[0]]);
+        }
+        else return false;
+        return true;
+
+    }
+    public void checkWinnerIfTooManyPoints(Player[] players)
+    {
+        int min=33;
+        int[] playerindexes=new int[players.length];
+        for(int i=0;i<players.length;i++)
+        {
+            playerindexes[i]=-1;
+        }
+        int temp=0;
+        for(int i=0;i<players.length;i++)
+        {
+            if (players[i].score-21<min && players[i].islost)
+            {
+                min=players[i].score-21;
+                playerindexes[temp]=i;
+            }
+        }
+        for(int i=0;i<players.length;i++)
+        {
+            if(players[i].score-21==min && players[i].islost)
+            {
+                playerindexes[temp]=i;
+                temp++;
+            }
+        }
+        if(playerindexes[1]>=0)
+        {
+            Output.showLoserDrawText(playerindexes,players);
+        }
+        else Output.showLoserWinText(players[playerindexes[0]]);
     }
 
 }

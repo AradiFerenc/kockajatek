@@ -4,11 +4,11 @@ public class PlayGame {
     GameRuler gameruler;
     Dice dice;
     Player[] players;
-    public PlayGame(int ais, int humans) {
+    public PlayGame(int ais, int humans, String []namesofhumans) {
         players=new Player[ais+humans];
         gameruler = new GameRuler();
         initAIPlayers(ais);
-        initHumanPlayers(ais,humans);
+        initHumanPlayers(ais,humans,namesofhumans);
         dice = new Dice();
     }
 
@@ -19,11 +19,13 @@ public class PlayGame {
         }
     }
 
-    public void initHumanPlayers(int aiplayers, int humanplayers)
+    public void initHumanPlayers(int aiplayers, int humanplayers, String []names)
     {
+        int nameorder=0;
         for(int i=aiplayers;i<aiplayers+humanplayers;i++)
         {
-            players[i]=new HumanPlayer();
+            players[i]=new HumanPlayer(names[nameorder]);
+            nameorder++;
         }
     }
 
@@ -36,7 +38,7 @@ public class PlayGame {
             samenamesexist=false;
             for(int i = 0; i< players.length-1; i++)
             {
-                for(int j = 1; j< players.length; j++)
+                for(int j = i+1; j< players.length; j++)
                 {
                     if(players[i].name.equals(players[j].name))
                     {
@@ -58,7 +60,10 @@ public class PlayGame {
         {
             if(doAFullRound()){return;}
         }
-        gameruler.checkWinnerIfNotEnoughPoints(players);
+        if(!gameruler.checkWinnerIfNotEnoughPoints(players))
+        {
+            gameruler.checkWinnerIfTooManyPoints(players);
+        }
     }
 
 
@@ -67,8 +72,12 @@ public class PlayGame {
     {
         for(int i=0;i<players.length;i++)
         {
-            gameruler.doThrowsForOnePlayer(players[i], players[i].thinkOfDiceThrow(players[i].score));
-            if (gameruler.winStatusCheck(players[i])) {return true;}
+            if(!players[i].islost)
+            {
+                gameruler.doThrowsForOnePlayer(players[i], players[i].thinkOfDiceThrow(players[i].score,players[i].islost));
+                if (gameruler.winStatusCheck(players[i]).equals(StatusEnum.Win)) {return true;}
+            }
+
         }
         return false;
     }

@@ -1,18 +1,27 @@
 package com.company;
 import java.util.Scanner;
 public class HumanPlayer extends Player{
-    @Override
-    public int thinkOfDiceThrow(int score)
+    public HumanPlayer(String newname)
     {
-        Output.showPlayerDiceThrowText();
-        Scanner input=new Scanner(System.in);
-        int numberofthrows=input.nextInt();
-        while(numberofthrows<1 || numberofthrows>3)
+        name=newname;
+    }
+
+    @Override
+    public int thinkOfDiceThrow(int score,boolean islost)
+    {
+        if(!islost)
         {
-            Output.showPlayerDiceThrowErrorText();
-            numberofthrows=input.nextInt();
+            Output.showPlayerDiceThrowText(name);
+            Scanner input=new Scanner(System.in);
+            int numberofthrows=input.nextInt();
+            while(numberofthrows<1 || numberofthrows>3)
+            {
+                Output.showPlayerDiceThrowErrorText();
+                numberofthrows=input.nextInt();
+            }
+            return numberofthrows;
         }
-        return numberofthrows;
+        else return 0;
     }
 
 }
