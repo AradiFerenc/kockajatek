@@ -7,8 +7,8 @@ public class AIPlayer extends Player {
     {
         if(!islost)
         {
-            return 3;
-            /*int numberOfThrows;
+            //return 3;
+            int numberOfThrows;
             if(score <= 3)
             {
                 numberOfThrows=3;
@@ -19,7 +19,7 @@ public class AIPlayer extends Player {
             }
             else numberOfThrows=1;
 
-            return numberOfThrows;*/
+            return numberOfThrows;
         }
         else return 0;
     }

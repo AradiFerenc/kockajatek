@@ -5,6 +5,10 @@ public class Output{
     {
         System.out.println("How many humans do you want?");
     }
+    public static void askForHumanPlayerNames(int i)
+    {
+            System.out.println("Human player " + (i + 1) + "'s name:");
+    }
     public static void askForAIPlayers()
     {
         System.out.println("How many AI-s do you want?");

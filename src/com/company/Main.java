@@ -19,7 +19,7 @@ public class Main {
 
         for(int i=0;i<numberofhumanplayers;i++)
         {
-            scanner=new Scanner(System.in);
+            Output.askForHumanPlayerNames(i);
             names[i]=scanner.next();
         }
         //Creating objects
